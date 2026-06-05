@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.22)
 project(CudaKernelLab LANGUAGES CXX CUDA)
 
+find_package(CUDAToolkit REQUIRED)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CUDA_STANDARD 17)
@@ -16,6 +18,7 @@ add_library(cuda_kernels
   src/host.cpp
 )
 target_include_directories(cuda_kernels PUBLIC include)
+target_link_libraries(cuda_kernels PUBLIC CUDA::cudart)
 target_compile_options(cuda_kernels PRIVATE
   $<$<COMPILE_LANGUAGE:CUDA>:--expt-relaxed-constexpr --use_fast_math>
 )
